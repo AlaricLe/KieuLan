@@ -1,0 +1,382 @@
+<title>Sơn Dương Hoàng Hôn</title>
+<style>
+  :root{
+    --gold-1:#fce7a8;
+    --gold-2:#eab94a;
+    --gold-3:#b8791f;
+    --gold-4:#6e3f10;
+    --sky-zenith:#0e0a24;
+    --sky-mid:#3d2359;
+    --sky-horizon:#c85f3c;
+    --sky-horizon2:#f2a259;
+    --mtn-far:#382a55;
+    --mtn-mid:#241a3d;
+    --mtn-near:#140f26;
+    --ivory:#f3e9d6;
+    --ivory-dim:rgba(243,233,214,.62);
+    --willow-wood:#1c140d;
+    --willow-leaf:#2a2013;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    width:100%;
+    min-height:100vh;
+    background:#0a0718;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow-x:hidden;
+  }
+
+  .scene{
+    position:relative;
+    width:100%;
+    max-width:1000px;
+    min-height:480px;
+    aspect-ratio:5/6;
+    max-height:100vh;
+    overflow:hidden;
+    background:var(--sky-zenith);
+    box-shadow:0 40px 120px -20px rgba(0,0,0,.7);
+  }
+
+  @media (max-width:640px){
+    .scene{ aspect-ratio:3/4; max-height:none; }
+  }
+
+  svg.sky{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  .star{
+    fill:var(--ivory);
+    animation:twinkle 4.5s ease-in-out infinite;
+  }
+
+  .goat-group{
+    transform-origin:730px 620px;
+    animation:breathe 7s ease-in-out infinite;
+  }
+
+  .glow-ring{
+    animation:pulse-glow 5.5s ease-in-out infinite;
+  }
+
+  .horn-glint{
+    animation:shimmer 6s ease-in-out infinite;
+  }
+
+  .mist{
+    animation:drift 22s ease-in-out infinite;
+  }
+
+  .mtn-layer-far{ animation:parallax-far 60s linear infinite; }
+  .mtn-layer-mid{ animation:parallax-mid 40s linear infinite; }
+
+  .willow-group{
+    transform-origin:288px 795px;
+    animation:sway 6.5s ease-in-out infinite;
+  }
+  .willow-frond{
+    fill:none;
+    stroke-linecap:round;
+  }
+
+  @keyframes twinkle{
+    0%,100%{ opacity:.15; }
+    50%{ opacity:1; }
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(1) translateY(0); }
+    50%{ transform:scale(1.012) translateY(-2px); }
+  }
+  @keyframes pulse-glow{
+    0%,100%{ opacity:.35; }
+    50%{ opacity:.75; }
+  }
+  @keyframes shimmer{
+    0%,100%{ opacity:0; transform:translateX(-30px); }
+    45%,55%{ opacity:.9; }
+    100%{ opacity:0; transform:translateX(30px); }
+  }
+  @keyframes drift{
+    0%{ transform:translateX(0); }
+    50%{ transform:translateX(22px); }
+    100%{ transform:translateX(0); }
+  }
+  @keyframes parallax-far{
+    0%{ transform:translateX(0); }
+    50%{ transform:translateX(-14px); }
+    100%{ transform:translateX(0); }
+  }
+  @keyframes parallax-mid{
+    0%{ transform:translateX(0); }
+    50%{ transform:translateX(10px); }
+    100%{ transform:translateX(0); }
+  }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-1deg); }
+    50%{ transform:rotate(1.1deg); }
+  }
+
+  .particle{
+    position:absolute;
+    bottom:6%;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--gold-1), transparent 70%);
+    opacity:0;
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%{ opacity:0; transform:translateY(0) scale(.6); }
+    12%{ opacity:.85; }
+    85%{ opacity:.3; }
+    100%{ opacity:0; transform:translateY(-560px) scale(1); }
+  }
+
+  .caption{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:2.6rem 2rem 2.1rem;
+    text-align:center;
+    background:linear-gradient(to top, rgba(6,4,16,.72), rgba(6,4,16,0));
+    opacity:0;
+    animation:reveal 1.6s .3s ease-out forwards;
+  }
+  @keyframes reveal{
+    to{ opacity:1; }
+  }
+  .caption h1{
+    margin:0;
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,"Noto Serif",serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(1.7rem, 4.4vw, 2.7rem);
+    letter-spacing:.01em;
+    color:var(--ivory);
+    text-shadow:0 2px 24px rgba(0,0,0,.5);
+    text-wrap:balance;
+  }
+  .caption p{
+    margin:.55rem 0 0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    font-size:.78rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ivory-dim);
+  }
+  .caption .rule{
+    width:44px;
+    height:1px;
+    margin:.9rem auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold-2), transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .star{ animation:none; opacity:.55; }
+    .goat-group{ animation:none; }
+    .glow-ring{ animation:none; opacity:.5; }
+    .horn-glint{ animation:none; opacity:0; }
+    .mist{ animation:none; }
+    .mtn-layer-far, .mtn-layer-mid{ animation:none; }
+    .willow-group{ animation:none; }
+    .particle{ display:none; }
+    .caption{ animation:none; opacity:1; }
+  }
+</style>
+
+<main class="scene">
+  <svg class="sky" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="art-title">
+    <title id="art-title">Sơn dương đứng trên vách núi lúc hoàng hôn, khắc họa bằng ánh vàng trên nền trời chạng vạng</title>
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0e0a24"/>
+        <stop offset="46%" stop-color="#3d2359"/>
+        <stop offset="78%" stop-color="#c85f3c"/>
+        <stop offset="100%" stop-color="#f2a259"/>
+      </linearGradient>
+
+      <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fbf1d8" stop-opacity=".55"/>
+        <stop offset="100%" stop-color="#fbf1d8" stop-opacity="0"/>
+      </radialGradient>
+
+      <radialGradient id="horizonGlow" cx="50%" cy="100%" r="75%">
+        <stop offset="0%" stop-color="#ffb56b" stop-opacity=".45"/>
+        <stop offset="100%" stop-color="#ffb56b" stop-opacity="0"/>
+      </radialGradient>
+
+      <linearGradient id="goldGrad" gradientUnits="userSpaceOnUse" x1="500" y1="290" x2="880" y2="770">
+        <stop offset="0%" stop-color="#fce7a8"/>
+        <stop offset="45%" stop-color="#eab94a"/>
+        <stop offset="100%" stop-color="#b8791f"/>
+      </linearGradient>
+
+      <linearGradient id="hoofGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#b8791f"/>
+        <stop offset="100%" stop-color="#6e3f10"/>
+      </linearGradient>
+
+      <filter id="softBlur" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="14"/>
+      </filter>
+      <filter id="wideBlur" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="34"/>
+      </filter>
+      <filter id="mistBlur" x="-40%" y="-100%" width="180%" height="300%">
+        <feGaussianBlur stdDeviation="18"/>
+      </filter>
+
+      <linearGradient id="shimmerGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#fff8e0" stop-opacity="0"/>
+        <stop offset="50%" stop-color="#fff8e0" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#fff8e0" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1000" height="1000" fill="url(#skyGrad)"/>
+    <rect x="0" y="500" width="1000" height="500" fill="url(#horizonGlow)"/>
+
+    <g id="stars"></g>
+
+    <circle cx="230" cy="205" r="140" fill="url(#moonGlow)" filter="url(#wideBlur)"/>
+    <circle cx="230" cy="205" r="52" fill="#f6ecd2"/>
+    <circle cx="216" cy="190" r="7" fill="#e9dcb8" opacity=".55"/>
+    <circle cx="245" cy="215" r="4.5" fill="#e9dcb8" opacity=".45"/>
+    <circle cx="238" cy="188" r="3" fill="#e9dcb8" opacity=".4"/>
+
+    <polygon class="mtn-layer-far" points="0,760 0,690 110,630 210,668 330,600 450,658 570,608 690,660 810,615 920,662 1000,635 1000,760" fill="#382a55" opacity=".85"/>
+    <polygon class="mtn-layer-mid" points="0,830 0,740 140,690 270,748 410,678 550,738 690,698 840,752 1000,715 1000,830" fill="#241a3d"/>
+
+    <ellipse class="mist" cx="330" cy="770" rx="260" ry="34" fill="rgba(255,222,180,.10)" filter="url(#mistBlur)"/>
+    <ellipse class="mist" cx="150" cy="800" rx="200" ry="26" fill="rgba(255,222,180,.08)" filter="url(#mistBlur)" style="animation-delay:-9s"/>
+
+    <polygon points="0,1000 0,800 100,760 220,798 340,770 460,808 500,796 500,1000" fill="#140f26"/>
+    <polygon points="500,1000 500,782 562,760 622,776 682,750 742,772 802,745 864,766 924,754 1000,776 1000,1000" fill="#140f26"/>
+
+    <g class="willow-group">
+      <ellipse cx="300" cy="565" rx="145" ry="95" fill="#241c12" opacity=".45" filter="url(#softBlur)"/>
+      <path d="M288,796 C282,730 292,660 300,612" stroke="#1c140d" stroke-width="15" stroke-linecap="round" fill="none"/>
+      <path d="M300,612 C270,600 245,585 222,575" stroke="#1c140d" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M300,612 C325,596 355,586 382,578" stroke="#1c140d" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M300,612 C298,590 300,568 306,548" stroke="#1c140d" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <g id="willowFronds"></g>
+    </g>
+
+    <g class="goat-group">
+      <g class="glow-ring">
+        <ellipse cx="735" cy="600" rx="200" ry="190" fill="#eab94a" opacity=".22" filter="url(#wideBlur)"/>
+      </g>
+
+      <polygon points="778,655 796,655 792,760 782,760" fill="url(#goldGrad)" opacity=".82"/>
+      <polygon points="663,655 681,655 677,760 667,760" fill="url(#goldGrad)" opacity=".82"/>
+
+      <path d="M825,566 C846,547 857,519 846,503 C838,514 828,531 819,556 Z" fill="url(#goldGrad)"/>
+
+      <ellipse cx="735" cy="617" rx="100" ry="60" fill="url(#goldGrad)"/>
+
+      <polygon points="655,594 611,514 645,494 686,590" fill="url(#goldGrad)"/>
+
+      <path d="M645,494 L601,469 L541,480 L515,506 L525,531 L561,546 L646,540 Z" fill="url(#goldGrad)"/>
+
+      <polygon points="595,460 615,433 626,465" fill="url(#goldGrad)"/>
+
+      <path class="far-horn" d="M598,452 C588,400 622,352 678,330 C722,313 754,326 770,300
+        C768,320 748,336 715,352 C670,373 630,412 613,462 Z" fill="#b8791f" opacity=".78"/>
+
+      <path d="M610,454 C601,399 641,349 701,329 C751,314 791,329 811,299
+        L806,309 C781,339 746,334 706,354 C656,374 616,414 606,464 Z" fill="url(#goldGrad)"/>
+      <path class="horn-glint" d="M640,410 C660,380 700,355 750,335" stroke="url(#shimmerGrad)" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+      <path d="M546,534 L561,545 L549,577 Z" fill="url(#goldGrad)"/>
+
+      <polygon points="688,660 708,660 704,760 692,760" fill="url(#goldGrad)"/>
+      <polygon points="802,660 822,660 818,760 806,760" fill="url(#goldGrad)"/>
+
+      <polygon points="667,752 677,752 675,760 669,760" fill="url(#hoofGrad)"/>
+      <polygon points="692,752 704,752 702,760 694,760" fill="url(#hoofGrad)"/>
+      <polygon points="782,752 792,752 790,760 784,760" fill="url(#hoofGrad)"/>
+      <polygon points="806,752 818,752 816,760 808,760" fill="url(#hoofGrad)"/>
+
+      <circle cx="533" cy="500" r="2.6" fill="#3a2410" opacity=".8"/>
+    </g>
+  </svg>
+
+  <div class="particles"></div>
+
+  <div class="caption">
+    <h1>Tặng Kiều Lan bức ảnh</h1>
+  </div>
+</main>
+
+<script>
+  (function(){
+    var starsGroup = document.getElementById('stars');
+    var starCount = 70;
+    for (var i = 0; i < starCount; i++){
+      var x = Math.random() * 1000;
+      var y = Math.random() * 560;
+      var r = Math.random() * 1.4 + 0.5;
+      var dur = (Math.random() * 3 + 3).toFixed(2);
+      var delay = (Math.random() * -6).toFixed(2);
+      var c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', x.toFixed(1));
+      c.setAttribute('cy', y.toFixed(1));
+      c.setAttribute('r', r.toFixed(2));
+      c.setAttribute('class','star');
+      c.style.animationDuration = dur + 's';
+      c.style.animationDelay = delay + 's';
+      starsGroup.appendChild(c);
+    }
+
+    var fronds = document.getElementById('willowFronds');
+    var anchors = [
+      [222,575],[228,580],[240,586],[255,592],[270,596],
+      [286,600],[300,612],[300,612],[314,600],[328,596],
+      [344,592],[360,586],[372,582],[382,578],[300,570],
+      [310,562],[290,562],[260,584],[352,584],[268,568]
+    ];
+    for (var k = 0; k < anchors.length; k++){
+      var sx = anchors[k][0];
+      var sy = anchors[k][1];
+      var len = 55 + Math.random() * 95;
+      var drift = (Math.random() - 0.5) * 46;
+      var midX = sx + drift * 0.6;
+      var midY = sy + len * 0.55;
+      var endX = sx + drift;
+      var endY = sy + len;
+      var d = 'M' + sx + ',' + sy + ' Q' + midX.toFixed(1) + ',' + midY.toFixed(1) + ' ' + endX.toFixed(1) + ',' + endY.toFixed(1);
+      var isGlint = Math.random() < 0.22;
+      var f = document.createElementNS('http://www.w3.org/2000/svg','path');
+      f.setAttribute('d', d);
+      f.setAttribute('class','willow-frond');
+      f.setAttribute('stroke', isGlint ? 'rgba(184,121,31,.55)' : '#2a2013');
+      f.setAttribute('stroke-width', (isGlint ? 2 : (1.4 + Math.random() * 1.6)).toFixed(1));
+      f.setAttribute('opacity', (isGlint ? 0.8 : (0.55 + Math.random() * 0.4)).toFixed(2));
+      fronds.appendChild(f);
+    }
+
+    var particleHost = document.querySelector('.particles');
+    var particleCount = 16;
+    for (var j = 0; j < particleCount; j++){
+      var p = document.createElement('div');
+      p.className = 'particle';
+      var left = 55 + Math.random() * 38;
+      var dur2 = (Math.random() * 6 + 9).toFixed(2);
+      var delay2 = (Math.random() * -14).toFixed(2);
+      p.style.left = left.toFixed(1) + '%';
+      p.style.animationDuration = dur2 + 's';
+      p.style.animationDelay = delay2 + 's';
+      particleHost.appendChild(p);
+    }
+  })();
+</script>
